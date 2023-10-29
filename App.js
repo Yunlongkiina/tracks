@@ -12,6 +12,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackdetaileScreen from './src/screens/TrackdetaileScreen';
 import TracklistScreen from './src/screens/TracklistScreen';
+import { Provider as AuthProvider } from 'react-native-paper';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,6 +28,9 @@ function  LoginSignup(){
       <Stack.Screen
         name="SignupScreen"
         component={SignupScreen}
+        options={{
+          headerShown: false,
+          }}
       />
     </Stack.Navigator>
   )
@@ -90,39 +94,23 @@ function BottomScreen() {
   );
 }
 
-
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="LoginSignup"
-          component={LoginSignup}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="BottomScreen"
-          component={BottomScreen}
-          options={{ headerLeft: ()=> null}}
-        />
-      </Stack.Navigator>
+      <AuthProvider>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="LoginSignup"
+            component={LoginSignup}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BottomScreen"
+            component={BottomScreen}
+            options={{ headerLeft: ()=> null}}
+          />
+        </Stack.Navigator>
+      </AuthProvider>
     </NavigationContainer>
   );
 }
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
