@@ -12,7 +12,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackdetaileScreen from './src/screens/TrackdetaileScreen';
 import TracklistScreen from './src/screens/TracklistScreen';
-import { Provider as AuthProvider } from 'react-native-paper';
+import { Provider as AuthProvider } from './src/context/AuthContext';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();

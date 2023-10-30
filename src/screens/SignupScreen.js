@@ -11,10 +11,9 @@ const SignupScreen=()=>{
     navigation.removeListener
     const { state, signup } = useContext(AuthContext);
 
-    // const {state, signup} = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-console.log(state);
+
     return(
         <View style={styles.container}>
         <Spacer>
@@ -36,6 +35,7 @@ console.log(state);
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+            {state.errorMessage? <Text>{state.errorMessage}</Text>: null}
             <Button title="Sign Up" onPress={()=>signup({email, password})} />
         </Spacer>
             {/* <Text style={{fontSize:48}}>SignupScreen</Text>

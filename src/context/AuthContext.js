@@ -3,17 +3,21 @@ import trackerApi from '../api/tracker'
 
 const authReducer=(state, action)=>{
     switch(action.type){
+        case 'add_error':
+            return {...state, errorMessage: action.playload};
         default:
             return state;
     }
 }
 
-const singnup = (dispatch)=>{
+const signup = (dispatch)=>{
     return async ({email, password})=>{
         try{
-            const response = await trackerApi.post('signup', {email, password})
+            const response = await trackerApi.post('/signup', {email, password})
+            console.log(response.data);
         }catch(err){
             console.log(err);
+            dispatch({type: 'add_error', playload:'Something went wrong!'})
         }
         // make api request to sign up 
 
@@ -21,7 +25,7 @@ const singnup = (dispatch)=>{
     };
 }
 
-const singnin =(dispatch)=>{
+const signin =(dispatch)=>{
     return ({email, password})=>{
         // make api request to sign up 
 
@@ -29,7 +33,7 @@ const singnin =(dispatch)=>{
     };
 }
 
-const singnout =(dispatch)=>{
+const signout =(dispatch)=>{
     return ({email, password})=>{
         // make api request to sign up 
 
@@ -39,6 +43,6 @@ const singnout =(dispatch)=>{
 
 export const {Context, Provider} = CreateDataContext(
     authReducer,
-    {singnup,singnin,singnout},
-    {isSignedIn: false},
+    {signup,signin,signout},
+    {isSignedIn: false, errorMessage:''},
 )
