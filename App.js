@@ -13,6 +13,7 @@ import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackdetaileScreen from './src/screens/TrackdetaileScreen';
 import TracklistScreen from './src/screens/TracklistScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as LocationProvider } from './src/context/LocationContext';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -97,20 +98,22 @@ function BottomScreen() {
 export default function App() {
   return (
     <NavigationContainer>
-      <AuthProvider>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="LoginSignup"
-            component={LoginSignup}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="BottomScreen"
-            component={BottomScreen}
-            options={{ headerLeft: ()=> null}}
-          />
-        </Stack.Navigator>
-      </AuthProvider>
+      <LocationProvider>
+        <AuthProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="LoginSignup"
+              component={LoginSignup}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="BottomScreen"
+              component={BottomScreen}
+              options={{ headerLeft: ()=> null}}
+            />
+          </Stack.Navigator>
+        </AuthProvider>
+      </LocationProvider>
     </NavigationContainer>
   );
 }
