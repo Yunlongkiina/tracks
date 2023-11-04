@@ -6,36 +6,26 @@ import { SafeAreaView } from "react-native";
 import Map from '../components/Map';
 import * as Location from 'expo-location';
 import { Context as LocationContext } from "../context/LocationContext";
+import useLocation from "../hooks/useLocation";
+import { useFocusEffect } from '@react-navigation/native';
 
 const TrackCreateScreen=()=>{
   const {addLocation} = useContext(LocationContext);
-  const [err, setErr] = useState(null);
-  const startWatching = async () => {
-      try {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        // Subscribe to location updates from the device. Please note that updates will 
-        //only occur while the application is in the foreground. To get location updates 
-        //while in background you'll need to use Location.startLocationUpdatesAsync.
-        await Location.watchPositionAsync(
-          {
-            accuracy:Location.Accuracy.BestForNavigation,
-            timeInterval:1000,
-            distanceInterval:10
-          },
-          (location) => {addLocation(location);}
-        );
+  const [focused, setFocused] = useState(false);
+  const [err] = useLocation(focused, addLocation);
 
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      setFocused(true)
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+        setFocused(false)
+      };
+    }, [])
+  );
 
-      } catch (e) {
-        setErr(e);
-      }
-    };
-    useEffect(() => {startWatching()}, []);
-    
 
     return(
         <SafeAreaView forceInset={{top:'always'}}>
