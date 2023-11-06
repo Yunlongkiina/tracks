@@ -3,43 +3,51 @@ import * as Location from 'expo-location';
 
 export default (shouldtrack, callback)=>{
     const [err, setErr] = useState(null);    
-    const [subscriber, setSubscriber] = useState(null);    
-
-    const startWatching = async () => {
-        try {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          // Subscribe to location updates from the device. Please note that updates will 
-          //only occur while the application is in the foreground. To get location updates 
-          //while in background you'll need to use Location.startLocationUpdatesAsync.
-          const sub = await Location.watchPositionAsync(
-            {
-              accuracy:Location.Accuracy.BestForNavigation,
-              timeInterval:1000,
-              distanceInterval:10
-            },
-            callback
-            // (location) => {addLocation(location);}
-          );
-    
-          if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-          }
-          setSubscriber(sub)
-        } catch (e) {
-          setErr(e);
-        }
-      };
+    const [subscriber, setSubscriber] = useState(null);
 
       useEffect(() => {
+        let subscriber;
+        const startWatching = async () => {
+          try {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              return;
+            }
+  
+            // Subscribe to location updates from the device. Please note that updates will 
+            //only occur while the application is in the foreground. To get location updates 
+            //while in background you'll need to use Location.startLocationUpdatesAsync.
+            const subscriber = await Location.watchPositionAsync(
+              {
+                accuracy:Location.Accuracy.BestForNavigation,
+                timeInterval:1000,
+                distanceInterval:10
+              },
+              callback
+              // (location) => {addLocation(location);}
+            );  
+          } catch (e) {
+            setErr(e);
+          }
+        };
+
         if(shouldtrack){
             startWatching()
-            console.log('shouldtrack');
         }else{
-            console.log('not      shouldtrack');
-            setSubscriber(null)
+          if(subscriber){
+            subscriber.remove();
+          }
+          subscriber = null;
         }
-       }, [shouldtrack]);
+        
+        return()=>{
+          if(subscriber){
+            subscriber.remove();
+          }
+         }
+  
+       }, [shouldtrack, callback]);
 
     return [err]
 }
