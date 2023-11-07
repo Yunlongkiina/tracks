@@ -3,9 +3,8 @@ import * as Location from 'expo-location';
 
 export default (shouldtrack, callback)=>{
     const [err, setErr] = useState(null);    
-    const [subscriber, setSubscriber] = useState(null);
-
-      useEffect(() => {
+    // const [subscriber, setSubscriber] = useState(null);
+    useEffect(() => {
         let subscriber;
         const startWatching = async () => {
           try {
@@ -18,7 +17,7 @@ export default (shouldtrack, callback)=>{
             // Subscribe to location updates from the device. Please note that updates will 
             //only occur while the application is in the foreground. To get location updates 
             //while in background you'll need to use Location.startLocationUpdatesAsync.
-            const subscriber = await Location.watchPositionAsync(
+            subscriber = await Location.watchPositionAsync(
               {
                 accuracy:Location.Accuracy.BestForNavigation,
                 timeInterval:1000,
@@ -27,6 +26,7 @@ export default (shouldtrack, callback)=>{
               callback
               // (location) => {addLocation(location);}
             );  
+
           } catch (e) {
             setErr(e);
           }

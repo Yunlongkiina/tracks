@@ -14,15 +14,15 @@ const TrackCreateScreen=()=>{
 
   const {state: { recording }, addLocation} = useContext(LocationContext);
   // fix useEffect inside useLocation() refer to wrong state
-  
+
   const callback = useCallback(
     location=>{
     addLocation(location, recording)
   }, [recording]);
 
   const isFocused = useIsFocused();
-  console.log(recording);
-//  const [focused, setFocused] = useState(true);
+
+  //  const [focused, setFocused] = useState(true);
   const [err] = useLocation(isFocused || recording, callback);
 
   // useFocusEffect(
@@ -43,7 +43,7 @@ const TrackCreateScreen=()=>{
             <Text h3>TrackCreateScreen</Text>
             <Map />
             {err? <Text>Please Enable your locaton on phone.</Text>:null}
-            {/* <TrackForm /> */}
+            <TrackForm />
         </SafeAreaView>
     )
 }
