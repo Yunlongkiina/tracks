@@ -1,6 +1,6 @@
-import React,{useState, useContext} from "react";
+import React,{useState} from "react";
 import {Text, Button, Input} from 'react-native-elements';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Spacer from "./Spacer";
 import { useNavigation } from '@react-navigation/native';
 

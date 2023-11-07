@@ -1,10 +1,9 @@
-import React,{useState, useContext} from "react";
+import React,{useContext} from "react";
 import {Text, StyleSheet, TouchableOpacity, Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Spacer from '../components/Spacer';
 import AuthForm from "../components/AuthForm";
 import { Context as AuthContext } from '../context/AuthContext';
-import { NavigationContext } from '@react-navigation/native';
 
 const SigninScreen=()=>{
     const navigation = useNavigation();
