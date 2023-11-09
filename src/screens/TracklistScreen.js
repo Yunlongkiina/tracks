@@ -1,38 +1,43 @@
-import React,{ useContext }  from "react";
-import {StyleSheet} from 'react-native';
-import {Context as TrackContext} from '../context/TrackContext';
-import { useIsFocused } from '@react-navigation/native';
-import {ListItem} from 'react-native-elements';
+import React, { useContext,useEffect } from "react";
+import { StyleSheet, Text, FlatList, TouchableOpacity,Button } from "react-native";
+import { Context as TrackContext } from "../context/TrackContext";
+import { useNavigation } from '@react-navigation/native';
 
-const TracklistScreen=()=>{
-    const {state, fetchTracks} = useContext(TrackContext);
-    const isFocused = useIsFocused();
+const TrackListScreen = () => {
+  const { state, fetchTracks } = useContext(TrackContext);
+  const navigation = useNavigation();
+  navigation.removeListener
+//   const isFocused = useIsFocused();
+    console.log('state', state);
+    
+    useEffect(() => {
+        fetchTracks();
+    }, []);
 
-    return <>
-    {isFocused?fetchTracks:null
-    }
+    return (
+    <>
+      {/* <NavigationEvents onWillFocus={fetchTracks} /> */}
+      <Text style={{ fontSize: 48 }}>TrackListScreen</Text>
+      <Button onPress={()=>fetchTracks() } title="Get Tracks"/>
+      <FlatList
+        data={state}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("TrackdetaileScreen", { _id: item._id })
+              }
+            >
+                <Text style={{height:30,borderWidth:1,marginTop:10}}>{item.name}</Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </>
+  );
+};
 
-    <FlatList
-            data={state}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => {
-            return (
-                <TouchableOpacity>
-                <ListItem>
-                    <ListItem.Content>
-                    <ListItem.Title>{item.name}</ListItem.Title>
-                    </ListItem.Content>
-                    <ListItem.Chevron />
-                </ListItem>
-                </TouchableOpacity>
-            );
-            }}
-        />
+const styles = StyleSheet.create({});
 
-      </>
-}
-
-const styles = StyleSheet.create({
-});
-
-export default TracklistScreen;
+export default TrackListScreen;

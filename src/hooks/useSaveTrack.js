@@ -2,6 +2,10 @@ import { useContext } from 'react';
 import { Context as TrackContext } from '../context/TrackContext';
 import { Context as LocationContext } from '../context/LocationContext';
 // import { navigate } from '../navigationRef';
+// import { useNavigation } from '@react-navigation/native';
+// const navigation = useNavigation();
+// navigation.removeListener
+
 
 export default () => {
   const { createTrack } = useContext(TrackContext);
