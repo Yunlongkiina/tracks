@@ -12,6 +12,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackdetaileScreen from './src/screens/TrackdetaileScreen';
 import TracklistScreen from './src/screens/TracklistScreen';
+import BarcoderScannerScreen from './src/screens/BarcoderScannerScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as LocationProvider } from './src/context/LocationContext';
 import { Provider as  TrackerProvider} from './src/context/TrackContext';
@@ -65,12 +66,26 @@ function BottomScreen() {
         component={TrackCreateScreen}
         options={{
           headerShown: false,
-          tabBarLabel: 'TrackCreateScreen',
+          tabBarLabel: 'Create Track',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="new-box" color={color} size={26} />
           ),
         }}
       />
+      <Tab.Screen
+        name="BarcoderScannerScreen"
+        component={BarcoderScannerScreen}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Scanner',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="barcode-scan" color={color} size={26} />
+          ),
+        }}
+
+      >
+       
+      </Tab.Screen>
       <Tab.Screen 
         name="TrackListDetailes"
         component={TrackListDetailes}
@@ -86,7 +101,7 @@ function BottomScreen() {
         name="AccountScreen"
         component={AccountScreen}
         options={{
-          tabBarLabel: 'AccountScreen',
+          tabBarLabel: 'Account',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
